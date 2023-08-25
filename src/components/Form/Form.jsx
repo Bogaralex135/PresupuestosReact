@@ -57,7 +57,7 @@ export function Form({ setMostrarPresupuesto }) {
               status: 'success',
               duration: 3000,
               isClosable: true,
-              position: 'bottom-right',
+              position: 'top-right',
             })
           }>
           Agregar Presupuesto

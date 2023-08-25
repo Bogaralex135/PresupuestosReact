@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import Form from './components/Form/Form'
-import AgregarGasto from './components/AgregarGasto/AgregarGasto'
+import Gastos from './components/Gastos'
+import Presupuesto from './components/Presupuesto'
 function App() {
   const [mostrarPresupuesto, setMostrarPresupuesto] = useState(true)
   return (
-    <main className='flex justify-center items-center mt-20'>
+    <main className='flex flex-col h-screen items-center'>
       {mostrarPresupuesto ? (
         <Form setMostrarPresupuesto={setMostrarPresupuesto} />
       ) : (
-        <AgregarGasto />
+        <>
+          <Presupuesto />
+          <Gastos />
+        </>
       )}
     </main>
   )

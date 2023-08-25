@@ -18,12 +18,13 @@ import {
 import { Icon } from '@chakra-ui/react'
 import { AddIcon, AtSignIcon, CalendarIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
-import useAppContext from '../../hooks/useAppContext'
+import { useAppContext } from '../../hooks/useAppContext'
 import { v4 as uuidv4 } from 'uuid'
 import { actions } from '../../Providers/AppProvider'
+import { categorias } from '../../constantes'
 
 export function AgregarGasto() {
-  const [gasto, setGasto] = useState('')
+  const [titulo, setTitulo] = useState('')
   const [monto, setMonto] = useState(0)
   const [fecha, setFecha] = useState('')
   const [categoria, setCategoria] = useState('')
@@ -38,21 +39,21 @@ export function AgregarGasto() {
       status: 'success',
       duration: 3000,
       isClosable: true,
-      position: 'bottom-right',
+      position: 'top-right',
     })
 
     dispatch({
       type: actions.ADD_GASTO,
       payload: {
         id: uuidv4(),
-        gasto,
+        titulo,
         monto: parseInt(monto),
         fecha,
         categoria,
       },
     })
 
-    setGasto('')
+    setTitulo('')
     setMonto(0)
     setFecha('')
     setCategoria('')
@@ -66,7 +67,7 @@ export function AgregarGasto() {
 
   const toast = useToast()
   return (
-    <>
+    <div className='fixed bottom-10 right-10'>
       <Button
         leftIcon={<Icon as={AddIcon} />}
         onClick={onOpen}
@@ -88,9 +89,9 @@ export function AgregarGasto() {
                   </InputLeftElement>
                   <Input
                     type='text'
-                    placeholder='Gasto'
-                    value={gasto}
-                    onChange={e => setGasto(e.target.value)}
+                    placeholder='Nombre del gasto'
+                    value={titulo}
+                    onChange={e => setTitulo(e.target.value)}
                   />
                 </InputGroup>
 
@@ -124,9 +125,11 @@ export function AgregarGasto() {
                   placeholder='Seleccionar Categoría'
                   value={categoria}
                   onChange={e => setCategoria(e.target.value)}>
-                  <option value='option1'>Option 1</option>
-                  <option value='option2'>Option 2</option>
-                  <option value='option3'>Option 3</option>
+                  {categorias.map(categoria => (
+                    <option key={categoria} value={categoria}>
+                      {categoria}
+                    </option>
+                  ))}
                 </Select>
               </Stack>
             </form>
@@ -144,7 +147,7 @@ export function AgregarGasto() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </div>
   )
 }
 
