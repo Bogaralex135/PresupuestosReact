@@ -11,7 +11,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 
-export function Form({ setMostrarPresupuesto }) {
+export function Form() {
   const [presupuesto, setPresupuesto] = useState(0)
   const { dispatch } = useAppContext()
 
@@ -22,13 +22,13 @@ export function Form({ setMostrarPresupuesto }) {
       type: actions.SET_PREPUESTO,
       payload: parseInt(presupuesto),
     })
-    setMostrarPresupuesto(false)
+    dispatch({ type: actions.MOSTRAR_PRESUPUESTO, payload: false })
   }
 
   const toast = useToast()
 
   return (
-    <form className='max-w-xl w-[36rem]' onSubmit={handleSubmit}>
+    <form className='max-w-xl w-[36rem] mt-20' onSubmit={handleSubmit}>
       <Stack spacing={4}>
         <InputGroup>
           <InputLeftElement

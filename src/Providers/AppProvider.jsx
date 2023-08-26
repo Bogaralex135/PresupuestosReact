@@ -1,20 +1,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect, useState } from 'react'
 
 const AppContext = createContext()
 
 const initialState = {
   gastos: [],
   presupuesto: 0,
-  darkMode: false,
+  mostrarPresupuesto: true,
 }
 
 const actions = {
   ADD_GASTO: 'ADD_GASTO',
   REMOVE_GASTO: 'REMOVE_GASTO',
-  TOGGLE_DARK_MODE: 'TOGGLE_DARK_MODE',
+  MOSTRAR_PRESUPUESTO: 'MOSTRAR_PRESUPUESTO',
   SET_PREPUESTO: 'SET_PREPUESTO',
   REMOVE_PRESUPUESTO: 'REMOVE_PRESUPUESTO',
   RESTART: 'RESTART',
@@ -32,10 +32,10 @@ function appReducer(state, action) {
         ...state,
         gastos: state.gastos.filter(gasto => gasto.id !== action.payload.id),
       }
-    case actions.TOGGLE_DARK_MODE:
+    case actions.MOSTRAR_PRESUPUESTO:
       return {
         ...state,
-        darkMode: !state.darkMode,
+        mostrarPresupuesto: action.payload,
       }
     case actions.SET_PREPUESTO:
       return {
@@ -55,10 +55,21 @@ function appReducer(state, action) {
 }
 
 function AppProvider({ children }) {
-  const [state, dispatch] = useReducer(appReducer, initialState)
+  const [state, dispatch] = useReducer(appReducer, getLSState())
+  const [mostrarPresupuesto, setMostrarPresupuesto] = useState(true)
+
+  function getLSState() {
+    const state = localStorage.getItem('state')
+    return state ? JSON.parse(state) : initialState
+  }
+
+  useEffect(() => {
+    localStorage.setItem('state', JSON.stringify(state))
+  }, [state])
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider
+      value={{ state, dispatch, mostrarPresupuesto, setMostrarPresupuesto }}>
       {children}
     </AppContext.Provider>
   )

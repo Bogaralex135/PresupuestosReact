@@ -1,13 +1,15 @@
-import { useState } from 'react'
+/* eslint-disable react/prop-types */
 import Form from './components/Form/Form'
 import Gastos from './components/Gastos'
-import Presupuesto from './components/Presupuesto'
+import Presupuesto from './components/Presupuesto/Presupuesto'
+import useAppContext from './hooks/useAppContext'
 function App() {
-  const [mostrarPresupuesto, setMostrarPresupuesto] = useState(true)
+  const { state } = useAppContext()
+
   return (
     <main className='flex flex-col h-screen items-center'>
-      {mostrarPresupuesto ? (
-        <Form setMostrarPresupuesto={setMostrarPresupuesto} />
+      {state.mostrarPresupuesto ? (
+        <Form />
       ) : (
         <>
           <Presupuesto />

@@ -139,6 +139,7 @@ export function AgregarGasto() {
             <Button
               colorScheme='blue'
               mr={3}
+              p={3}
               onClick={handleClose}
               type='submit'>
               Agregar
