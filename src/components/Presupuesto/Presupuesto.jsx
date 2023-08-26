@@ -2,10 +2,9 @@ import { useAppContext } from '../../hooks/useAppContext'
 import Chart from './Chart'
 import Stats from './Stats'
 import { useEffect, useState } from 'react'
-import { actions } from '../../Providers/AppProvider'
 
 export function Presupuesto() {
-  const { state, dispatch } = useAppContext()
+  const { state } = useAppContext()
 
   const [disponible, setDisponible] = useState(0)
   const [gastado, setGastado] = useState(0)
@@ -29,8 +28,6 @@ export function Presupuesto() {
       setGastado(totalGastado)
     }, 1000)
   }, [state.gastos, state.presupuesto])
-
-  console.log(state)
 
   return (
     <div className=' flex flex-col items-center p-14 shadow-2xl '>
